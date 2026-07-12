@@ -6,6 +6,8 @@ spring:
       server:
         git:
           uri: https://github.com/amankrmj09/bakery-config-repo.git
+          username: ${GITHUB_ACTOR}
+          password: ${GITHUB_TOKEN}
           refresh-rate: 60
 
 server:
