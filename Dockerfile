@@ -1,4 +1,4 @@
-﻿# Stage 1: Build
+# Stage 1: Build
 FROM eclipse-temurin:25-jdk AS builder
 WORKDIR /app
 
@@ -23,6 +23,9 @@ WORKDIR /app
 # Create a non-root user
 RUN addgroup --system spring-user && adduser --system --ingroup spring-user spring-user
 USER spring-user:spring-user
+
+# Provide a writable home directory for JGit
+ENV HOME=/tmp
 
 # Copy extracted layers from builder stage
 COPY --from=builder /app/extracted/dependencies/ ./
