@@ -14,7 +14,7 @@ COPY src src
 RUN ./gradlew clean bootJar -x test --no-daemon
 
 # Extract layers
-RUN java -Djarmode=layertools -jar build/libs/*.jar extract
+RUN java -Djarmode=tools -jar build/libs/*.jar extract --layers --launcher
 
 # Stage 2: Runtime
 FROM eclipse-temurin:25-jre
@@ -35,3 +35,4 @@ EXPOSE 8080
 
 # Run the application
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+
