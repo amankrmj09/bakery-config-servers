@@ -4,9 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "org.devofblue"
-version = "0.0.1-SNAPSHOT"
-description = "config-server"
+description = "Centralized Configuration Server for Bakery Microservices"
 
 java {
     toolchain {
