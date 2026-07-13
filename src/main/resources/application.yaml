@@ -11,4 +11,4 @@ spring:
           refresh-rate: 60
 
 server:
-  port: 8021
+  port: ${SERVER_PORT:8081}
