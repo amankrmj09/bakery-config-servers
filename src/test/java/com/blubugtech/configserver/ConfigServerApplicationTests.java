@@ -1,4 +1,4 @@
-package org.devofblue.configserver;
+package com.blubugtech.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

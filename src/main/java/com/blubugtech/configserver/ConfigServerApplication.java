@@ -1,4 +1,4 @@
-package org.devofblue.configserver;
+package com.blubugtech.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
