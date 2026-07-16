@@ -19,8 +19,13 @@ repositories {
 extra["springCloudVersion"] = "2025.0.3"
 
 dependencies {
-    implementation("org.springframework.cloud:spring-cloud-config-server")
+    // 2. Spring Boot Core & Web
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    // 3. Spring Cloud & Discovery
+    implementation("org.springframework.cloud:spring-cloud-config-server")
+
+    // 9. Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
