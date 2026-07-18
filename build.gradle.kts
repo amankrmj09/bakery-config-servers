@@ -24,6 +24,8 @@ dependencies {
 
     // 3. Spring Cloud & Discovery
     implementation("org.springframework.cloud:spring-cloud-config-server")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     // 9. Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
