@@ -1,57 +1,52 @@
-# 🧁 Config Server
+# Spring Cloud Config Server
 
-![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)
+This repository contains the Spring Cloud Config Server for the Bakery application.
 
-Welcome to the **Config Server**, a core component of the Shah's Bakery Microservice Platform.
+## 1. Role
+The Config Server acts as a centralized configuration manager for all microservices in the distributed system. It is responsible for serving configuration properties across all environments. By pulling configuration files directly from the centralized `config-repo`, it ensures that configurations are externalized, version-controlled, and consistently applied to services without requiring code changes or application rebuilds.
 
-## 📑 Table of Contents
-- [Features](#-features)
-- [Folder Structure](#-folder-structure)
-- [Dependencies](#-dependencies)
-- [Endpoints](#-endpoints)
-- [How to Run](#-how-to-run)
-- [Related Links](#-related-links)
+## 2. Architecture
+At boot time, each microservice (the Config Client) connects to the Config Server before initializing its own ApplicationContext. The microservice requests its specific configuration based on its application name and active profile (e.g., `application-name-dev.yml`). The Config Server fetches these properties from the backed version control system (`config-repo`) and serves them to the microservice. This allows the microservice to start with the correct, externalized configurations seamlessly.
 
-## ✨ Features
-- Centralized configuration management for all microservices.
-- Dynamic loading of properties from a remote Git repository (`config-repo`).
-- Seamless updates to- Secure exposure of configuration data to clients.
+## 3. Configuration Properties
+The Config Server itself requires some initial configuration to run. This is typically defined in its `application.yml` (or via environment variables/`.env` file).
 
-## 📁 Folder Structure
-The main `src/main/java` directory is organized as follows:
-```text
-src/
-└── main/
-    └── java/org/devofblue/configserver/
-        └── ConfigServerApplication.java # The main Spring Boot entry point with @EnableConfigServer.
-```
+Key properties include:
+- **Port:** The server runs on port `8888` by default (`server.port=8888`).
+- **Git URI:** The location of the configuration repository. 
+  Example `application.yml` configuration:
+  ```yaml
+  server:
+    port: 8888
+  spring:
+    application:
+      name: config-server
+    cloud:
+      config:
+        server:
+          git:
+            uri: <URI_TO_YOUR_CONFIG_REPO> # e.g., file://${user.home}/config-repo or a GitHub URL
+            default-label: main
+  ```
 
-## 🛠️ Dependencies
-- **Framework:** Spring Boot, Spring Cloud Config
-- **Key Modules:** Eureka Client, Spring Cloud Config Server
+## 4. Running Locally
+To run the Config Server locally:
 
-## 🌐 Endpoints
-> [!NOTE]
-> The Config Server serves property files internally to microservices rather than exposing typical public REST APIs.
+**Prerequisites:**
+- Java Development Kit (JDK) installed
+- Maven or Gradle installed
+- The `config-repo` available locally or via remote URL.
 
-- `GET /{application}/{profile}` - Retrieves configuration properties for a specific service and environment profile.
-
-## 🚀 How to Run
-
-1. **Clone the repository:**
+**Steps:**
+1. Navigate to the `config-server` directory.
+2. Ensure the Git URI in `src/main/resources/application.yml` is pointing to your `config-repo`.
+3. Build and run the application using Maven:
    ```bash
-   git clone https://github.com/amankrmj09/bakery-config-servers.git
-   cd config-server
+   ./mvnw spring-boot:run
    ```
-
-2. **Configure Environment:**
-   Ensure your `.env` or `application.yml` properties correctly point to the `config-repo` directory or repository URL.
-
-3. **Run the application:**
+   Or using Gradle:
    ```bash
    ./gradlew bootRun
    ```
-
-## 🔗 Related Links
-- [Main Platform README](../README.md)
+4. The server should start on `http://localhost:8888`.
+5. You can verify it's working by navigating to an endpoint for a specific configuration, for example: `http://localhost:8888/application/default`.
